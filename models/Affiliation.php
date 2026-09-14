@@ -1,26 +1,56 @@
 <?php
-function getAllAffiliations($pdo) {
-    return $pdo->query("SELECT * FROM affiliation")->fetchAll(PDO::FETCH_ASSOC);
+require_once __DIR__ . '/../core/Repository.php';
+
+class AffiliationRepository extends Repository
+{
+    public function findAll(): array
+    {
+        return $this->fetchAll("SELECT * FROM affiliation");
+    }
+
+    public function findById(int $id): ?array
+    {
+        return $this->fetchOne("SELECT * FROM affiliation WHERE id_affiliation = :id", [':id' => $id]);
+    }
+
+    public function create(array $data): void
+    {
+        $this->execute("INSERT INTO affiliation (nom) VALUES (:nom)", $data);
+    }
+
+    public function update(array $data): void
+    {
+        $this->execute("UPDATE affiliation SET nom=:nom WHERE id_affiliation=:id", $data);
+    }
+
+    public function delete(int $id): void
+    {
+        $this->execute("DELETE FROM affiliation WHERE id_affiliation = :id", [':id' => $id]);
+    }
 }
 
-function getAffiliationById($pdo, $id) {
-    $stmt = $pdo->prepare("SELECT * FROM affiliation WHERE id_affiliation = :id");
-    $stmt->execute([':id' => $id]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+function getAllAffiliations(PDO $pdo): array
+{
+    return (new AffiliationRepository($pdo))->findAll();
 }
 
-function createAffiliation($pdo, $data) {
-    $stmt = $pdo->prepare("INSERT INTO affiliation (nom) VALUES (:nom)");
-    $stmt->execute($data);
+function getAffiliationById(PDO $pdo, int $id): ?array
+{
+    return (new AffiliationRepository($pdo))->findById($id);
 }
 
-function updateAffiliation($pdo, $data) {
-    $stmt = $pdo->prepare("UPDATE affiliation SET nom=:nom WHERE id_affiliation=:id");
-    $stmt->execute($data);
+function createAffiliation(PDO $pdo, array $data): void
+{
+    (new AffiliationRepository($pdo))->create($data);
 }
 
-function deleteAffiliation($pdo, $id) {
-    $stmt = $pdo->prepare("DELETE FROM affiliation WHERE id_affiliation = :id");
-    $stmt->execute([':id' => $id]);
+function updateAffiliation(PDO $pdo, array $data): void
+{
+    (new AffiliationRepository($pdo))->update($data);
+}
+
+function deleteAffiliation(PDO $pdo, int $id): void
+{
+    (new AffiliationRepository($pdo))->delete($id);
 }
 ?>

@@ -1,59 +1,94 @@
 <?php
+require_once __DIR__ . "/../config/database.php";
 require_once __DIR__ . "/../models/Utilisateur.php";
 
-function handleUtilisateur($action) {
-    $pdo = getConnexion();
-    switch ($action) {
-        case 'utilisateurDetail':
-            $utilisateur = getUtilisateurById($pdo, $_GET['id']);
-            require __DIR__ . "/../views/utilisateurs/detail.php";
-            break;
+class UtilisateurController
+{
+    private PDO $pdo;
+    private UtilisateurRepository $repository;
 
-        case 'utilisateurAjouter':
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                createUtilisateur($pdo, [
-                    ':pseudo'       => $_POST['pseudo'],
-                    ':email'        => $_POST['email'],
-                    ':mot_de_passe' => $_POST['mot_de_passe']
-                ]);
-                header('Location: index.php?action=utilisateurListe');
-                exit;
-            }
-            require __DIR__ . "/../views/utilisateurs/ajouter.php";
-            break;
+    public function __construct(?PDO $pdo = null)
+    {
+        $this->pdo = $pdo ?? Database::getConnexion();
+        $this->repository = new UtilisateurRepository($this->pdo);
+    }
 
-        case 'utilisateurModifier':
-            $utilisateur = getUtilisateurById($pdo, $_GET['id']);
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                updateUtilisateur($pdo, [
-                    ':pseudo'       => $_POST['pseudo'],
-                    ':email'        => $_POST['email'],
-                    ':mot_de_passe' => $_POST['mot_de_passe'],
-                    ':id'           => $_GET['id']
-                ]);
-                header('Location: index.php?action=utilisateurListe');
-                exit;
-            }
-            require __DIR__ . "/../views/utilisateurs/modifier.php";
-            break;
+    public function handle(string $action): void
+    {
+        switch ($action) {
+            case 'utilisateurDetail':
+                $this->detail();
+                break;
+            case 'utilisateurAjouter':
+                $this->ajouter();
+                break;
+            case 'utilisateurModifier':
+                $this->modifier();
+                break;
+            case 'utilisateurSupprimer':
+                $this->supprimer();
+                break;
+            default:
+                $this->index();
+                break;
+        }
+    }
 
-        case 'utilisateurSupprimer':
-            $currentUserId = getCurrentUserId();
-            if ($currentUserId === null) {
-                header('Location: index.php?action=utilisateurListe');
-                exit;
-            }
+    public function index(): void
+    {
+        $utilisateurs = $this->repository->findAll();
+        require __DIR__ . "/../views/utilisateurs/liste.php";
+    }
 
-            requireOwnershipOrDeny((string)$_GET['id'], 'index.php?action=utilisateurListe');
-            deleteUtilisateur($pdo, (int)$_GET['id']);
+    public function detail(): void
+    {
+        $utilisateur = $this->repository->findById((int) ($_GET['id'] ?? 0));
+        require __DIR__ . "/../views/utilisateurs/detail.php";
+    }
+
+    public function ajouter(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->repository->create([
+                ':pseudo' => $_POST['pseudo'],
+                ':email' => $_POST['email'],
+                ':mot_de_passe' => $_POST['mot_de_passe'],
+            ]);
             header('Location: index.php?action=utilisateurListe');
             exit;
+        }
 
+        require __DIR__ . "/../views/utilisateurs/ajouter.php";
+    }
 
-        default:
-            $utilisateurs = getAllUtilisateurs($pdo);
-            require __DIR__ . "/../views/utilisateurs/liste.php";
-            break;
+    public function modifier(): void
+    {
+        $utilisateur = $this->repository->findById((int) ($_GET['id'] ?? 0));
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->repository->update([
+                ':pseudo' => $_POST['pseudo'],
+                ':email' => $_POST['email'],
+                ':mot_de_passe' => $_POST['mot_de_passe'],
+                ':id' => (int) $_GET['id'],
+            ]);
+            header('Location: index.php?action=utilisateurListe');
+            exit;
+        }
+
+        require __DIR__ . "/../views/utilisateurs/modifier.php";
+    }
+
+    public function supprimer(): void
+    {
+        $currentUserId = MainController::getCurrentUserId();
+        if ($currentUserId === null) {
+            header('Location: index.php?action=utilisateurListe');
+            exit;
+        }
+
+        MainController::requireOwnershipOrDeny((string) ($_GET['id'] ?? 0), 'index.php?action=utilisateurListe');
+        $this->repository->delete((int) $_GET['id']);
+        header('Location: index.php?action=utilisateurListe');
+        exit;
     }
 }
-?>

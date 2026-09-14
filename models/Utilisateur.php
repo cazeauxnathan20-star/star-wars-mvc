@@ -1,26 +1,62 @@
 <?php
-function getAllUtilisateurs($pdo) {
-    return $pdo->query("SELECT * FROM utilisateur")->fetchAll(PDO::FETCH_ASSOC);
+require_once __DIR__ . '/../core/Repository.php';
+
+class UtilisateurRepository extends Repository
+{
+    public function findAll(): array
+    {
+        return $this->fetchAll("SELECT * FROM utilisateur");
+    }
+
+    public function findById(int $id): ?array
+    {
+        return $this->fetchOne("SELECT * FROM utilisateur WHERE id_user = :id", [':id' => $id]);
+    }
+
+    public function create(array $data): void
+    {
+        $this->execute(
+            "INSERT INTO utilisateur (pseudo, email, mot_de_passe) VALUES (:pseudo, :email, :mot_de_passe)",
+            $data
+        );
+    }
+
+    public function update(array $data): void
+    {
+        $this->execute(
+            "UPDATE utilisateur SET pseudo=:pseudo, email=:email, mot_de_passe=:mot_de_passe WHERE id_user=:id",
+            $data
+        );
+    }
+
+    public function delete(int $id): void
+    {
+        $this->execute("DELETE FROM utilisateur WHERE id_user = :id", [':id' => $id]);
+    }
 }
 
-function getUtilisateurById($pdo, $id) {
-    $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE id_user = :id");
-    $stmt->execute([':id' => $id]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+function getAllUtilisateurs(PDO $pdo): array
+{
+    return (new UtilisateurRepository($pdo))->findAll();
 }
 
-function createUtilisateur($pdo, $data) {
-    $stmt = $pdo->prepare("INSERT INTO utilisateur (pseudo, email, mot_de_passe) VALUES (:pseudo, :email, :mot_de_passe)");
-    $stmt->execute($data);
+function getUtilisateurById(PDO $pdo, int $id): ?array
+{
+    return (new UtilisateurRepository($pdo))->findById($id);
 }
 
-function updateUtilisateur($pdo, $data) {
-    $stmt = $pdo->prepare("UPDATE utilisateur SET pseudo=:pseudo, email=:email, mot_de_passe=:mot_de_passe WHERE id_user=:id");
-    $stmt->execute($data);
+function createUtilisateur(PDO $pdo, array $data): void
+{
+    (new UtilisateurRepository($pdo))->create($data);
 }
 
-function deleteUtilisateur($pdo, $id) {
-    $stmt = $pdo->prepare("DELETE FROM utilisateur WHERE id_user = :id");
-    $stmt->execute([':id' => $id]);
+function updateUtilisateur(PDO $pdo, array $data): void
+{
+    (new UtilisateurRepository($pdo))->update($data);
+}
+
+function deleteUtilisateur(PDO $pdo, int $id): void
+{
+    (new UtilisateurRepository($pdo))->delete($id);
 }
 ?>

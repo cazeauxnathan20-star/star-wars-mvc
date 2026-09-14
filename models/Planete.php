@@ -1,28 +1,62 @@
 <?php
-function getAllPlanetes2($pdo) {
-    return $pdo->query("SELECT * FROM planete")->fetchAll(PDO::FETCH_ASSOC);
+require_once __DIR__ . '/../core/Repository.php';
+
+class PlaneteRepository extends Repository
+{
+    public function findAll(): array
+    {
+        return $this->fetchAll("SELECT * FROM planete");
+    }
+
+    public function findById(int $id): ?array
+    {
+        return $this->fetchOne("SELECT * FROM planete WHERE id_planete = :id", [':id' => $id]);
+    }
+
+    public function create(array $data): void
+    {
+        $this->execute(
+            "INSERT INTO planete (nom, climat, population, image) VALUES (:nom, :climat, :population, :image)",
+            $data
+        );
+    }
+
+    public function update(array $data): void
+    {
+        $this->execute(
+            "UPDATE planete SET nom=:nom, climat=:climat, population=:population, image=:image WHERE id_planete=:id",
+            $data
+        );
+    }
+
+    public function delete(int $id): void
+    {
+        $this->execute("DELETE FROM planete WHERE id_planete = :id", [':id' => $id]);
+    }
 }
 
-function getPlaneteById($pdo, $id) {
-    $stmt = $pdo->prepare("SELECT * FROM planete WHERE id_planete = :id");
-    $stmt->execute([':id' => $id]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+function getAllPlanetes2(PDO $pdo): array
+{
+    return (new PlaneteRepository($pdo))->findAll();
 }
 
-function createPlanete($pdo, $data) {
-    $stmt = $pdo->prepare("INSERT INTO planete (nom, climat, population, image) VALUES (:nom, :climat, :population, :image)");
-    $stmt->execute($data);
+function getPlaneteById(PDO $pdo, int $id): ?array
+{
+    return (new PlaneteRepository($pdo))->findById($id);
 }
 
-
-function updatePlanete($pdo, $data) {
-    $stmt = $pdo->prepare("UPDATE planete SET nom=:nom, climat=:climat, population=:population, image=:image WHERE id_planete=:id");
-    $stmt->execute($data);
+function createPlanete(PDO $pdo, array $data): void
+{
+    (new PlaneteRepository($pdo))->create($data);
 }
 
+function updatePlanete(PDO $pdo, array $data): void
+{
+    (new PlaneteRepository($pdo))->update($data);
+}
 
-function deletePlanete($pdo, $id) {
-    $stmt = $pdo->prepare("DELETE FROM planete WHERE id_planete = :id");
-    $stmt->execute([':id' => $id]);
+function deletePlanete(PDO $pdo, int $id): void
+{
+    (new PlaneteRepository($pdo))->delete($id);
 }
 ?>

@@ -1,93 +1,55 @@
 <?php
-
-require_once __DIR__ . '/CommentaireController.php';
+require_once __DIR__ . '/FilmController.php';
+require_once __DIR__ . '/PersonnageController.php';
+require_once __DIR__ . '/UtilisateurController.php';
+require_once __DIR__ . '/VaisseauController.php';
+require_once __DIR__ . '/FavoriController.php';
 require_once __DIR__ . '/PlaneteController.php';
 require_once __DIR__ . '/EspeceController.php';
+require_once __DIR__ . '/AffiliationController.php';
+require_once __DIR__ . '/CommentaireController.php';
 
-// Assure la disponibilité des fonctions espece attendues par le dispatch
-// (les noms ne doivent pas être masqués par d’autres fichiers)
+class RouterControllers
+{
+    public function dispatch(string $action, string $module): void
+    {
+        switch ($module) {
+            case 'film':
+                (new FilmController())->handle($action);
+                break;
 
+            case 'personnage':
+                (new PersonnageController())->handle($action);
+                break;
 
+            case 'utilisateur':
+                (new UtilisateurController())->handle($action);
+                break;
 
+            case 'vaisseau':
+                (new VaisseauController())->handle($action);
+                break;
 
-// Routeurs simples pour mapper les actions index/detail/ajouter/modifier/supprimer
+            case 'favori':
+                (new FavoriController())->handle($action);
+                break;
 
-function actionPlaneteRouter(string $action): void {
-    switch ($action) {
-        case 'planeteListe':
-            actionPlaneteIndex();
-            break;
-        case 'planeteDetail':
-            actionPlaneteDetail();
-            break;
-        case 'planeteAjouter':
-            actionPlaneteAjouter();
-            break;
-        case 'planeteModifier':
-            actionPlaneteModifier();
-            break;
-        case 'planeteSupprimer':
-            actionPlaneteSupprimer();
-            break;
-    }
-}
+            case 'planete':
+                (new PlaneteController())->handle($action);
+                break;
 
-function actionEspeceRouter(string $action): void {
-    switch ($action) {
-        case 'especeListe':
-            actionEspeceIndex();
-            break;
-        case 'especeDetail':
-            actionEspeceDetail();
-            break;
-        case 'especeAjouter':
-            actionEspeceAjouter();
-            break;
-        case 'especeModifier':
-            actionEspeceModifier();
-            break;
-        case 'especeSupprimer':
-            actionEspeceSupprimer();
-            break;
-    }
-}
+            case 'espece':
+                (new EspeceController())->handle($action);
+                break;
 
-// (pas d’alias ici : le dispatch appelle actionEspece* via actionEspeceRouter)
+            case 'affiliation':
+                (new AffiliationController())->handle($action);
+                break;
 
-
-
-function actionAffiliationRouter(string $action): void {
-    switch ($action) {
-        case 'affiliationListe':
-            actionAffiliationIndex();
-            break;
-        case 'affiliationDetail':
-            actionAffiliationDetail();
-            break;
-        case 'affiliationAjouter':
-            actionAffiliationAjouter();
-            break;
-        case 'affiliationModifier':
-            actionAffiliationModifier();
-            break;
-        case 'affiliationSupprimer':
-            actionAffiliationSupprimer();
-            break;
-    }
-}
-
-function actionCommentaireRouter(string $action): void {
-    switch ($action) {
-        case 'commentaireListe':
-            actionCommentaireIndex();
-            break;
-        case 'commentaireAjouter':
-            actionCommentaireAjouter();
-            break;
-        case 'commentaireSupprimer':
-            actionCommentaireSupprimer();
-            break;
-        // si tu ajoutes un jour détail/modifier, tu étends ici
+            case 'commentaire':
+                (new CommentaireController())->handle($action);
+                break;
+        }
     }
 }
 
