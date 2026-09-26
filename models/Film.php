@@ -1,27 +1,55 @@
 <?php
-function getAllFilms($pdo) {
-    return $pdo->query("SELECT * FROM film ORDER BY episode")->fetchAll(PDO::FETCH_ASSOC);
-}
+class Film
+{
+    private PDO $pdo;
 
-function getFilmById($pdo, $id) {
-    $stmt = $pdo->prepare("SELECT * FROM film WHERE id_film = :id");
-    $stmt->execute([':id' => $id]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
+    public function __construct(PDO $pdo)
+    {
+        $this->pdo = $pdo;
+    }
 
-function createFilm($pdo, $data) {
-    $stmt = $pdo->prepare("INSERT INTO film (titre, date_sortie, episode, image_url) VALUES (:titre, :date_sortie, :episode, :image_url)");
-    $stmt->execute($data);
-}
+    public function getAll(): array
+    {
+        $query = $this->pdo->query('SELECT * FROM film ORDER BY episode');
+        return $query->fetchAll();
+    }
 
-function updateFilm($pdo, $data) {
-    $stmt = $pdo->prepare("UPDATE film SET titre=:titre, date_sortie=:date_sortie, episode=:episode, image_url=:image_url WHERE id_film=:id");
-    $stmt->execute($data);
-}
+    public function getById(int $id): ?array
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM film WHERE id_film = :id');
+        $stmt->execute([':id' => $id]);
+        $film = $stmt->fetch();
 
+        return $film ?: null;
+    }
 
-function deleteFilm($pdo, $id) {
-    $stmt = $pdo->prepare("DELETE FROM film WHERE id_film = :id");
-    $stmt->execute([':id' => $id]);
+    public function create(array $data): bool
+    {
+        $stmt = $this->pdo->prepare(
+            'INSERT INTO film (titre, date_sortie, episode, image_url)
+             VALUES (:titre, :date_sortie, :episode, :image_url)'
+        );
+
+        return $stmt->execute($data);
+    }
+
+    public function update(array $data): bool
+    {
+        $stmt = $this->pdo->prepare(
+            'UPDATE film
+             SET titre = :titre,
+                 date_sortie = :date_sortie,
+                 episode = :episode,
+                 image_url = :image_url
+             WHERE id_film = :id'
+        );
+
+        return $stmt->execute($data);
+    }
+
+    public function delete(int $id): bool
+    {
+        $stmt = $this->pdo->prepare('DELETE FROM film WHERE id_film = :id');
+        return $stmt->execute([':id' => $id]);
+    }
 }
-?>
