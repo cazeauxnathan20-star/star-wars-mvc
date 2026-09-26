@@ -10,7 +10,7 @@ require_once __DIR__ . "/../models/Personnage.php";
 
 function actionIndex() {
     $pdo = getConnexion();
-    $films = getAllFilms($pdo);
+    $films = (new Film($pdo))->getAll();
     $personnages = getAllPersonnages($pdo);
     require __DIR__ . "/../views/index.php";
 }
