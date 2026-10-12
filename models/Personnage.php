@@ -13,11 +13,16 @@ function searchPersonnages($pdo, $term) {
             FROM personnage p
             LEFT JOIN espece e ON p.id_espece = e.id_espece
             LEFT JOIN planete pl ON p.id_planete = pl.id_planete
-            WHERE p.nom LIKE :term OR p.prenom LIKE :term";
+            WHERE p.nom LIKE :nom_term
+               OR p.prenom LIKE :prenom_term
+               OR CONCAT_WS(' ', p.prenom, p.nom) LIKE :full_name_term";
 
     $stmt = $pdo->prepare($sql);
+    $likeTerm = '%' . $term . '%';
     $stmt->execute([
-        ':term' => '%' . $term . '%'
+        ':nom_term' => $likeTerm,
+        ':prenom_term' => $likeTerm,
+        ':full_name_term' => $likeTerm
     ]);
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
