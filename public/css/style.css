@@ -1,0 +1,805 @@
+/* Style global pour l'application Star Wars */
+:root {
+    --bg: #000000;
+    --surface: #c2391b;
+    --surface-strong: #5d1616;
+    --text: #eebd1b;
+    --muted: #d39b9f;
+    --accent: #ffe600;
+    --accent-dark: #d99b33;
+    --border: rgba(105, 9, 9, 0.12);
+
+    /* effets */
+    --energy: rgba(245, 182, 66, 0.55);
+    --energy-soft: rgba(245, 182, 66, 0.18);
+    --danger: rgba(210, 64, 64, 0.55);
+
+    --radius: 16px;
+    --shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    min-height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #2e2e2e;
+    color: var(--text);
+}
+
+
+body {
+    background-image: url("https://img.pikbest.com/best/video_preview_img/2310/9568104-6523e6d39bbe2.jpg!w700wp");
+    background-size: 30%;
+    background-position: center;
+}
+
+.container {
+    width: min(1200px, calc(100% - 2rem));
+    margin: 0 auto;
+}
+
+.page-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.site-header {
+    padding: 5rem 0 0rem;
+}
+
+.site-header h1 {
+    color: #ffe81f;
+
+    text-shadow:
+        0 0 5px #ffe81f,
+        0 0 15px #ffe81f,
+        0 0 25px #ffe81f;
+
+    letter-spacing: 4px;
+    text-align: center;
+}
+
+.site-header p {
+    margin: 0;
+    color: var(--muted);
+    max-width: 720px;
+}
+
+.home-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: rgba(0, 0, 0, 0.916);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.card--highlight {
+    border-color: rgba(245, 182, 66, 0.3);
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-list--grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.8rem;
+}
+
+.nav-list li {
+    margin-bottom: 0;
+}
+
+.nav-list a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 1rem;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid rgba(245, 182, 66, 0.4);
+    border-radius: 999px;
+    font-weight: 600;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.nav-list a:hover {
+    background: rgba(245, 182, 66, 0.12);
+    color: var(--text);
+    transform: translateY(-1px);
+}
+
+.section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.section-note {
+    margin: 0;
+    color: var(--muted);
+}
+
+.film-list h2 {
+    margin: 0;
+}
+
+.film-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.film-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.film-link {
+    display: grid;
+    gap: 0.35rem;
+    padding: 1.25rem;
+    color: inherit;
+    text-decoration: none;
+}
+
+.film-link:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+.film-link strong {
+    font-size: 1.1rem;
+}
+
+.film-link span {
+    color: var(--muted);
+}
+
+.site-footer {
+    margin-top: auto;
+    padding: 1.5rem 0;
+    text-align: center;
+    color: var(--muted);
+}
+
+.hero-text {
+    max-width: 700px;
+    margin: 1rem 0 1.5rem;
+    color: #0044ff;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.hero-panel {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.hero-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+}
+
+.hero-card--accent {
+    background: rgba(245, 182, 66, 0.12);
+    border-color: rgba(245, 182, 66, 0.25);
+}
+
+.hero-card__label {
+    display: block;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8rem;
+}
+
+.hero-card__value {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.header-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr);
+    gap: 2rem;
+    align-items: center;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 0.95rem 1.6rem;
+    min-height: 48px;
+    font-weight: 700;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.button--primary {
+    background: linear-gradient(135deg, #f54242, #f7d17d);
+    color: #08101f;
+    border: none;
+    box-shadow: 0 12px 30px rgba(245, 182, 66, 0.25);
+}
+
+.button--secondary {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: var(--text);
+}
+
+.button--ghost {
+    background: transparent;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+}
+
+.film-item {
+    background: linear-gradient(180deg, rgba(16,34,68,0.95), rgba(7,13,25,0.95));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: calc(var(--radius) - 4px);
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.film-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+}
+
+.film-link {
+    display: grid;
+    gap: 0.35rem;
+    padding: 1.35rem;
+    color: inherit;
+    text-decoration: none;
+}
+
+.film-link:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+.character-list {
+    margin-top: 2.5rem;
+}
+
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.character-item {
+    display: block;
+}
+
+.character-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.character-link:hover {
+    transform: translateY(-3px);
+}
+
+.character-card {
+    padding: 1.2rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.character-card strong {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.character-card span {
+    color: var(--muted);
+}
+
+.character-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(245,182,66,0.35);
+}
+
+@media (max-width: 900px) {
+    .header-inner {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .site-header, .site-footer {
+        text-align: center;
+    }
+
+    .hero-actions {
+        justify-content: center;
+    }
+
+    .hero-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Styles supplémentaires pour les tables et formulaires */
+table {
+    border-color: var(--border) !important;
+    background: rgba(255,255,255,0.02);
+}
+
+table th {
+    background: rgba(245, 182, 66, 0.1) !important;
+    color: var(--accent) !important;
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="number"],
+textarea,
+select {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text) !important;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-family: inherit;
+}
+
+input::placeholder {
+    color: var(--muted);
+}
+
+a {
+    color: var(--accent);
+}
+
+a:hover {
+    color: #f7d17d;
+}
+
+.eyebrow {
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    margin: 0 0 0.5rem 0;
+}
+
+/* -----------------------------
+   Ajouts “mode Star Wars” (CSS only)
+   ----------------------------- */
+
+/* Superposition énergie + grille fine (performance friendly) */
+html {
+    background: var(--bg);
+}
+
+
+/* Ajout scanlines via ::after pour rester compatible avec le layer existant */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 0px,
+        rgba(0,0,0,0) 2px,
+        rgba(0,0,0,0.25) 3px
+    );
+    mix-blend-mode: overlay;
+    opacity: 0.25;
+    animation: sw-ray 10s ease-in-out infinite;
+}
+
+
+/* Glow “Star Wars” plus propre */
+a:hover {
+    color: var(--text);
+    text-shadow:
+        0 0 2px rgba(255,230,0,0.55),
+        0 0 10px rgba(255,230,0,0.35),
+        0 0 22px rgba(245,182,66,0.25);
+    background-image: linear-gradient(90deg, rgba(245,182,66,0.12), rgba(255,230,0,0.08));
+    border-color: rgba(245,182,66,0.45);
+}
+
+/* Sous-titres (et liens) dans les “cartes Star Wars” : pas de soulignement, style laser */
+.sw-entity-subtitle,
+.sw-entity-subtitle a,
+.sw-entity-subtitle a:visited {
+    margin: 0;
+    color: rgba(255, 230, 31, 0.95) !important;
+    text-decoration: none !important;
+    -webkit-text-decoration: none !important;
+    text-shadow:
+        0 0 2px rgba(255,230,31,0.55),
+        0 0 10px rgba(245,182,66,0.35),
+        0 0 18px rgba(56,189,248,0.18);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+/* Au cas où certains titres/sous-titres seraient des liens */
+.sw-entity-card a,
+.sw-entity-card a:visited {
+    text-decoration: none !important;
+    -webkit-text-decoration: none !important;
+}
+
+/* Evite le soulignement sur les liens “titres”/zones cartes (cas où le contenu n'a pas sw-entity-subtitle) */
+.sw-entity-card h1 a,
+.sw-entity-card h2 a,
+.sw-entity-card h3 a,
+.sw-entity-card h4 a,
+.sw-entity-card p a {
+    text-decoration: none !important;
+    -webkit-text-decoration: none !important;
+}
+
+
+
+/* “Star Wars vibe” sur les cartes (effet de champ de force au hover) */
+.card:hover,
+.film-item:hover,
+.character-card:hover,
+.hero-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(245,182,66,0.28);
+    box-shadow:
+        0 0 0 1px rgba(245,182,66,0.18) inset,
+        0 18px 44px rgba(0,0,0,0.26),
+        0 0 26px rgba(245,182,66,0.12);
+}
+
+/* Accent “laser” uniquement pour le H1 du header (on garde les autres h1 sans style jaune) */
+.site-header h1 {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -6px);
+
+    margin: 0 !important;
+    padding: 0;
+    text-align: center;
+    width: auto;
+    max-width: 90vw;
+
+    font-size: clamp(2.8rem, 4.8vw, 4.2rem);
+    letter-spacing: 0.08em;
+    color: #b8f0ff;
+    text-shadow:
+        0 0 6px rgba(255,230,0,0.25),
+        0 0 22px rgba(56,189,248,0.26),
+        0 0 40px rgba(56,189,248,0.18);
+}
+
+
+
+.site-header {
+    position: relative;
+}
+
+
+
+.site-header h1::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: -6px;
+    bottom: -10px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(245,182,66,0.0), rgba(245,182,66,0.65), rgba(56,189,248,0.55), rgba(245,182,66,0.0));
+    opacity: 0.75;
+    filter: blur(0.2px);
+}
+
+/* Styles confinés au header (on ne touche pas les autres titres h1) */
+.site-header h1 {
+    color: #ff0000;
+}
+
+.site-title__logo{
+    display:block;
+    max-height: 150px;
+    width:auto;
+    margin: 0 auto;
+}
+
+@media (max-width: 640px){
+    .site-title__logo{ max-height: 108px; }
+}
+
+
+
+
+
+.site-header h1:hover {
+    color: #ff0000;
+}
+
+
+
+
+
+/* Rayons d’énergie sur CTA au lieu de glow sur tout le texte */
+button[type="submit"]:hover,
+input[type="submit"]:hover,
+.button--primary:hover {
+    box-shadow:
+        0 0 0 1px rgba(245,182,66,0.35) inset,
+        0 18px 50px rgba(245,182,66,0.14);
+}
+
+
+
+
+body {
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Rayons lents (option : réduit si user préfère) */
+@keyframes sw-ray {
+    0% {
+        transform: translate3d(-4%, -2%, 0) rotate(-8deg);
+        opacity: 0.35;
+    }
+    50% {
+        transform: translate3d(2%, 3%, 0) rotate(-6deg);
+        opacity: 0.55;
+    }
+    100% {
+        transform: translate3d(-4%, -2%, 0) rotate(-8deg);
+        opacity: 0.35;
+    }
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: -30vh;
+    left: -20vw;
+    width: 140vw;
+    height: 140vh;
+    pointer-events: none;
+    z-index: -1;
+
+    background: repeating-linear-gradient(
+        115deg,
+        rgba(245, 182, 66, 0.0) 0px,
+        rgba(245, 182, 66, 0.10) 2px,
+        rgba(245, 182, 66, 0.0) 9px
+    );
+
+    filter: blur(1px);
+    opacity: 0.16;
+    animation: sw-ray 16s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::after {
+        animation: none;
+    }
+}
+
+/* Glow sur titres / sections “actives” */
+.card--highlight {
+    box-shadow:
+        0 0 0 1px rgba(245, 182, 66, 0.25) inset,
+        0 18px 40px rgba(0,0,0,0.24),
+        0 0 28px rgba(245, 182, 66, 0.12);
+}
+
+/* Boutons : halo énergie */
+.button--primary {
+    position: relative;
+    isolation: isolate;
+}
+
+.button--primary::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 999px;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), rgba(255,255,255,0) 55%),
+                linear-gradient(135deg, rgba(245, 182, 66, 0.55), rgba(247, 209, 125, 0.15));
+    opacity: 0.35;
+    z-index: -1;
+    filter: blur(6px);
+}
+
+.button--primary:hover {
+    box-shadow: 0 16px 40px rgba(245, 182, 66, 0.20);
+}
+
+/* “Bord laser” sur film items */
+.film-item {
+    position: relative;
+}
+
+.film-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow:
+        0 0 0 1px rgba(245, 182, 66, 0.0) inset,
+        0 0 0 rgba(245, 182, 66, 0.0);
+    transition: box-shadow 0.25s ease;
+}
+
+.film-item:hover::before {
+    box-shadow:
+        0 0 0 1px rgba(245, 182, 66, 0.35) inset,
+        0 0 22px rgba(245, 182, 66, 0.20);
+}
+
+/* Character-card: glow léger */
+.character-card:hover {
+    box-shadow: 0 0 0 1px rgba(245,182,66,0.18) inset;
+}
+
+/* Focus états “énergie” pour formulaires */
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="number"],
+textarea,
+select {
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: rgba(245, 182, 66, 0.55) !important;
+    box-shadow:
+        0 0 0 4px rgba(245, 182, 66, 0.14),
+        0 0 22px rgba(245, 182, 66, 0.12);
+}
+
+/* Table : hover + lignes plus lisibles */
+table tbody tr {
+    transition: background 0.15s ease;
+}
+
+table tbody tr:hover {
+    background: rgba(245, 182, 66, 0.07);
+}
+
+table td, table th {
+    border-color: var(--border) !important;
+}
+
+/* CTA/submits (quand il n'y a pas de class) */
+button[type="submit"],
+input[type="submit"] {
+    border-radius: 999px;
+    padding: 0.75rem 1.2rem;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(245, 182, 66, 0.14);
+    color: var(--text);
+    font-weight: 700;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+button[type="submit"]:hover,
+input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(245, 182, 66, 0.12);
+    background: rgba(245, 182, 66, 0.22);
+}
+
+.card,
+.film-item,
+.character-card,
+.hero-card {
+    background: rgba(10,10,15,0.9);
+
+    border: 1px solid rgba(255,232,31,0.2);
+
+    box-shadow:
+        0 0 15px rgba(255,232,31,0.1),
+        0 0 40px rgba(255,232,31,0.05);
+}
+
+.card:hover,
+.film-item:hover,
+.character-card:hover,
+.hero-card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 0 25px rgba(255, 251, 0, 0.3),
+        0 0 60px rgba(255,232,31,0.15);
+}
+
+.button--primary,
+button,
+input[type="submit"] {
+
+    background: linear-gradient(
+        135deg,
+        #ffe81f,
+        #ffb700
+    );
+
+    color: black;
+    font-weight: bold;
+
+    border: none;
+
+    box-shadow:
+        0 0 15px rgba(255,232,31,0.4);
+
+    transition: all 0.3s;
+}
+
+.button--primary:hover,
+button:hover,
+input[type="submit"]:hover {
+
+    transform: scale(1.05);
+
+    box-shadow:
+        0 0 30px rgba(255,232,31,0.8),
+        0 0 60px rgba(255,232,31,0.4);
+}
