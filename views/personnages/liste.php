@@ -6,7 +6,7 @@
 <!-- Barre de recherche -->
 <form method="GET" style="margin-bottom: 1.5rem; display: flex; gap: 1rem;">
     <input type="hidden" name="action" value="personnageListe">
-    <input type="text" name="search" placeholder="Rechercher..." value="<?= $_GET['search'] ?? '' ?>" style="padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: var(--text); flex: 1;">
+    <input type="text" name="search" placeholder="Rechercher..." value="<?= htmlspecialchars($searchTerm, ENT_QUOTES, 'UTF-8') ?>" style="padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: var(--text); flex: 1;">
     <button type="submit" class="button button--primary">Rechercher</button>
 </form>
 
@@ -47,8 +47,6 @@
 <a href="index.php?action=personnageAjouter" class="button button--primary" style="display: inline-block; margin-top: 1.5rem;">+ Ajouter un personnage</a>
 
 <?php require __DIR__ . '/../layout_footer.php'; ?>
-
-
 
 
 

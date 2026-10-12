@@ -30,8 +30,14 @@ function actionPersonnageIndex() {
     $pdo = getConnexion();
 
     
-    if (isset($_GET['search']) && !empty($_GET['search'])) {
-        $personnages = searchPersonnages($pdo, $_GET['search']);
+    $searchTerm = $_GET['search'] ?? '';
+    if (!is_string($searchTerm)) {
+        $searchTerm = '';
+    }
+    $searchTerm = trim($searchTerm);
+
+    if ($searchTerm !== '') {
+        $personnages = searchPersonnages($pdo, $searchTerm);
     } else {
         $personnages = getAllPersonnages($pdo);
     }
